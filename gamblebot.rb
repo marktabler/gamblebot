@@ -86,6 +86,9 @@ class ZenoPlayer < Player
   end
 end
 
+class ZenoPlayerB < ZenoPlayer
+end
+
 class LuckyNumberPlayer < Player
   def strategy(victim, last_hit)
     if accumulated_damage >= 21
@@ -102,12 +105,22 @@ class RandomPlayer < Player
   end
 end
 
+class BrutePlayer < Player
+  def strategy(victim, last_hit)
+    if accumulated_damage >= 100
+      :attack
+    else
+      :roll
+    end
+  end
+end
 
 
 ROUNDS = 50000 # Rounds are matched pairs - P1 first, then P2 first
 
 matches = [[RandomPlayer, ZenoPlayer], [RandomPlayer, LuckyNumberPlayer],
-          [ZenoPlayer, LuckyNumberPlayer]]
+          [ZenoPlayer, LuckyNumberPlayer], [BrutePlayer, RandomPlayer],
+          [BrutePlayer, LuckyNumberPlayer], [ZenoPlayer, ZenoPlayerB]]
 
 
 matches.each do |match_pair|
